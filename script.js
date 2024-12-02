@@ -36,8 +36,9 @@ document.getElementById('get-price').addEventListener('click', async function() 
             // Create and append the 'Add to Collection' button
             const saveButton = document.createElement('button');
             saveButton.textContent = 'Add to Collection';
-            saveButton.style.marginTop = '10px';
+            saveButton.style.marginTop = '10px';  // Add some spacing
             saveButton.addEventListener('click', function() {
+                console.log(`Adding ${cardName} to collection`);
                 addCardToCollection(cardName, price);
             });
 
