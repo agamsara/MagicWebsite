@@ -82,6 +82,9 @@ function updateUI() {
             removeCardFromCollection(index);
         });
 
+        // Log to confirm the button is being created
+        console.log(`Creating "Remove" button for card: ${card.name}`);
+
         // Append the remove button to the button container
         removeButtonContainer.appendChild(removeButton);
 
