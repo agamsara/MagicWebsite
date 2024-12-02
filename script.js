@@ -61,9 +61,24 @@ function updateUI() {
     // Update the collection list
     const collectionList = document.getElementById('collection-list');
     collectionList.innerHTML = '';  // Clear the list
-    collection.forEach(card => {
+
+    // Add each card to the list, along with a "Remove" button
+    collection.forEach((card, index) => {
         const listItem = document.createElement('li');
         listItem.textContent = `${card.name} - $${card.price}`;
+
+        // Create a "Remove" button
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.style.marginLeft = '10px';
+        removeButton.addEventListener('click', function() {
+            removeCardFromCollection(index);
+        });
+
+        // Append the remove button to the list item
+        listItem.appendChild(removeButton);
+
+        // Append the list item to the collection list
         collectionList.appendChild(listItem);
     });
 
@@ -80,6 +95,23 @@ function addCardToCollection(name, price) {
     totalValue += parseFloat(price);
 
     // Save the collection and total value to local storage
+    localStorage.setItem('collection', JSON.stringify(collection));
+    localStorage.setItem('totalValue', totalValue.toFixed(2));
+
+    // Update the UI
+    updateUI();
+}
+
+// Function to remove a card from the collection
+function removeCardFromCollection(index) {
+    // Remove the card at the given index
+    const cardToRemove = collection[index];
+    collection.splice(index, 1);
+
+    // Update the total value
+    totalValue -= cardToRemove.price;
+
+    // Save the updated collection and total value to local storage
     localStorage.setItem('collection', JSON.stringify(collection));
     localStorage.setItem('totalValue', totalValue.toFixed(2));
 
