@@ -14,7 +14,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 350px;
 }
 
 input {
@@ -39,7 +39,26 @@ button:hover {
 }
 
 #card-value {
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 1.2em;
 }
 
+#collection-container {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px 0;
+    font-size: 1em;
+}
+
+h2, h3 {
+    font-size: 1.2em;
+}
