@@ -1,45 +1,39 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+document.getElementById('get-price').addEventListener('click', async function() {
+    const cardName = document.getElementById('card-name').value;
 
-.container {
-    text-align: center;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
+    if (!cardName) {
+        alert("Please enter a card name.");
+        return;
+    }
 
-input {
-    padding: 10px;
-    margin: 10px 0;
-    width: 80%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    // Scryfall API URL to search for cards by name
+    const apiUrl = `https://api.scryfall.com/cards/search?q=${encodeURIComponent(cardName)}`;
 
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    try {
+        // Fetch card data from Scryfall API
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-button:hover {
-    background-color: #45a049;
-}
+        console.log(data);  // Log the API response to the console
 
-#card-value {
-    margin-top: 20px;
-    font-size: 1.2em;
-}
+        if (!response.ok) {
+            alert("Error fetching data. Please try again.");
+            return;
+        }
 
+        // If no card is found
+        if (data.data.length === 0) {
+            document.getElementById('card-value').textContent = 'Card not found.';
+        } else {
+            // Get the first card's price and name
+            const card = data.data[0];
+            const price = card.prices.usd || "Price not available";
+
+            // Display the card price
+            document.getElementById('card-value').textContent = `Price: $${price}`;
+        }
+    } catch (error) {
+        console.error('Error fetching card data:', error);
+        alert('An error occurred. Please try again.');
+    }
+});
