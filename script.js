@@ -42,9 +42,13 @@ document.getElementById('get-price').addEventListener('click', async function() 
                 addCardToCollection(cardName, price);
             });
 
-            // Append the button to the card value display area
+            // Create a container div for the button
+            const buttonContainer = document.createElement('div');
+            buttonContainer.appendChild(saveButton);
+
+            // Append the button container to the card value display area
             const cardValueArea = document.getElementById('card-value');
-            cardValueArea.appendChild(saveButton);
+            cardValueArea.appendChild(buttonContainer);
         }
     } catch (error) {
         console.error('Error fetching card data:', error);
@@ -67,6 +71,9 @@ function updateUI() {
         const listItem = document.createElement('li');
         listItem.textContent = `${card.name} - $${card.price}`;
 
+        // Create a container for the "Remove" button
+        const removeButtonContainer = document.createElement('div');
+        
         // Create a "Remove" button
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
@@ -75,8 +82,11 @@ function updateUI() {
             removeCardFromCollection(index);
         });
 
-        // Append the remove button to the list item
-        listItem.appendChild(removeButton);
+        // Append the remove button to the button container
+        removeButtonContainer.appendChild(removeButton);
+
+        // Append the remove button container to the list item
+        listItem.appendChild(removeButtonContainer);
 
         // Append the list item to the collection list
         collectionList.appendChild(listItem);
