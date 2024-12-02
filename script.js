@@ -39,12 +39,30 @@ document.getElementById('get-price').addEventListener('click', async function() 
             saveButton.style.marginTop = '10px';  // Add some spacing
             saveButton.addEventListener('click', function() {
                 console.log(`Adding ${cardName} to collection`);
-                addCardToCollection(cardName, price);
+                addCardToCollection(cardName, price, selectedVersion);
             });
 
             // Create a container div for the button
             const buttonContainer = document.createElement('div');
             buttonContainer.appendChild(saveButton);
+
+            // Create a dropdown to choose the version
+            const versionSelect = document.createElement('select');
+            versionSelect.setAttribute('id', 'version-select');
+            const versions = card.printings;  // Get the list of printings
+            versions.forEach(version => {
+                const option = document.createElement('option');
+                option.value = version;
+                option.textContent = version;
+                versionSelect.appendChild(option);
+            });
+
+            versionSelect.addEventListener('change', function() {
+                selectedVersion = versionSelect.value;
+            });
+
+            // Append the dropdown to the button container
+            buttonContainer.appendChild(versionSelect);
 
             // Append the button container to the card value display area
             const cardValueArea = document.getElementById('card-value');
@@ -69,7 +87,7 @@ function updateUI() {
     // Add each card to the list, along with a "Remove" button
     collection.forEach((card, index) => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${card.name} - $${card.price}`;
+        listItem.textContent = `${card.name} - $${card.price} (${card.version})`;  // Display version
 
         // Create a container for the "Remove" button
         const removeButtonContainer = document.createElement('div');
@@ -79,12 +97,8 @@ function updateUI() {
         removeButton.textContent = 'Remove';
         removeButton.style.marginLeft = '10px';
         removeButton.addEventListener('click', function() {
-            console.log(`Removing ${card.name} from collection`);
             removeCardFromCollection(index);
         });
-
-        // Log to confirm the button is being created
-        console.log(`Creating "Remove" button for card: ${card.name}`);
 
         // Append the remove button to the button container
         removeButtonContainer.appendChild(removeButton);
@@ -101,9 +115,9 @@ function updateUI() {
 }
 
 // Function to add a card to the collection
-function addCardToCollection(name, price) {
-    // Add the card to the collection
-    collection.push({ name, price: parseFloat(price) });
+function addCardToCollection(name, price, version) {
+    // Add the card with version to the collection
+    collection.push({ name, price: parseFloat(price), version });
     
     // Update the total value
     totalValue += parseFloat(price);
