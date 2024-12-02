@@ -46,23 +46,26 @@ document.getElementById('get-price').addEventListener('click', async function() 
             const buttonContainer = document.createElement('div');
             buttonContainer.appendChild(saveButton);
 
-            // Create a dropdown to choose the version
-            const versionSelect = document.createElement('select');
-            versionSelect.setAttribute('id', 'version-select');
-            const versions = card.printings;  // Get the list of printings
-            versions.forEach(version => {
-                const option = document.createElement('option');
-                option.value = version;
-                option.textContent = version;
-                versionSelect.appendChild(option);
-            });
+            // Check if there are multiple versions (printings)
+            const versions = card.printings;
+            if (versions && versions.length > 1) {
+                // Create a dropdown to choose the version
+                const versionSelect = document.createElement('select');
+                versionSelect.setAttribute('id', 'version-select');
+                versions.forEach(version => {
+                    const option = document.createElement('option');
+                    option.value = version;
+                    option.textContent = version;
+                    versionSelect.appendChild(option);
+                });
 
-            versionSelect.addEventListener('change', function() {
-                selectedVersion = versionSelect.value;
-            });
+                versionSelect.addEventListener('change', function() {
+                    selectedVersion = versionSelect.value;
+                });
 
-            // Append the dropdown to the button container
-            buttonContainer.appendChild(versionSelect);
+                // Append the dropdown to the button container
+                buttonContainer.appendChild(versionSelect);
+            }
 
             // Append the button container to the card value display area
             const cardValueArea = document.getElementById('card-value');
