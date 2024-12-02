@@ -79,6 +79,7 @@ function updateUI() {
         removeButton.textContent = 'Remove';
         removeButton.style.marginLeft = '10px';
         removeButton.addEventListener('click', function() {
+            console.log(`Removing ${card.name} from collection`);
             removeCardFromCollection(index);
         });
 
