@@ -33,14 +33,17 @@ document.getElementById('get-price').addEventListener('click', async function() 
             // Display the card price
             document.getElementById('card-value').textContent = `Price: $${price}`;
 
-            // Add a button to save the card to the collection
+            // Create and append the 'Add to Collection' button
             const saveButton = document.createElement('button');
             saveButton.textContent = 'Add to Collection';
+            saveButton.style.marginTop = '10px';
             saveButton.addEventListener('click', function() {
                 addCardToCollection(cardName, price);
             });
 
-            document.getElementById('card-value').appendChild(saveButton);
+            // Append the button to the card value display area
+            const cardValueArea = document.getElementById('card-value');
+            cardValueArea.appendChild(saveButton);
         }
     } catch (error) {
         console.error('Error fetching card data:', error);
